@@ -1,2 +1,2 @@
 # Crowley
-Scrape specific domains for email adresses
+Scrape specific domains for email addresses

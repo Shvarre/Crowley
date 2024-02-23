@@ -14,7 +14,7 @@ def fetch_subpages():
         subpages = []
         for link in soup.find_all('a', href=True):
             subpage_url = link['href']
-            full_url = urljoin(domain, subpage_url)  # Konverterer relativ sti til absolut URL
+            full_url = urljoin(domain, subpage_url)  # Convert to absolute URL
             subpages.append(full_url)
         return subpages
     except requests.exceptions.RequestException as e:
@@ -70,7 +70,7 @@ def remove_email_from_list():
 def export_emails():
     emails = big_listbox.get(0, tk.END)
     for email in emails:
-        print(email)  # Skriver emails ud i terminalen
+        print(email)  # Write to terminal
 
 def handle_subpage_selection(event):
     selected_indices = subpage_listbox.curselection()
@@ -85,17 +85,16 @@ def handle_subpage_selection(event):
 
 # GUI setup
 root = tk.Tk()
-root.title("Webcrawler")
-root.geometry("1000x600")  # Juster vinduets størrelse
+root.title("Crowley")
+root.geometry("1000x600")  # Adjust window size
 
-# Domain entry og knap i en top frame
 top_frame = tk.Frame(root)
 top_frame.pack(fill=tk.X)
 
 entry = tk.Entry(top_frame)
 entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-fetch_button = tk.Button(top_frame, text="Hent undersider", command=update_subpage_list)
+fetch_button = tk.Button(top_frame, text="Get subpages", command=update_subpage_list)
 fetch_button.pack(side=tk.RIGHT, padx=5)
 
 # Subpages listbox
@@ -119,17 +118,10 @@ email_listbox = tk.Listbox(email_frame)
 email_listbox.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 email_listbox.bind('<Double-1>', on_email_double_click)
 
-add_email_button = tk.Button(email_frame, text="Tilføj Email", command=add_email_to_list)
+add_email_button = tk.Button(email_frame, text="Add email", command=add_email_to_list)
 add_email_button.pack(pady=5)
 
-# Scrollbar kun for email_listbox
-'''
-email_scrollbar = tk.Scrollbar(email_frame, orient=tk.VERTICAL, command=email_listbox.yview)
-email_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-email_listbox.config(yscrollcommand=email_scrollbar.set)
-'''
-
-# Big listbox, fjern email-knap og eksport-knap
+# Big listbox
 big_list_frame = tk.Frame(root)
 big_list_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
@@ -137,10 +129,10 @@ big_listbox = tk.Listbox(big_list_frame)
 big_listbox.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 big_listbox.bind('<Double-1>', on_big_list_double_click)
 
-remove_email_button = tk.Button(big_list_frame, text="Fjern Email", command=remove_email_from_list)
+remove_email_button = tk.Button(big_list_frame, text="Remove email", command=remove_email_from_list)
 remove_email_button.pack(pady=5)
 
-export_button = tk.Button(big_list_frame, text="Eksporter Emails", command=export_emails)
+export_button = tk.Button(big_list_frame, text="Export emails", command=export_emails)
 export_button.pack(pady=5)
 
 # Output textarea
